@@ -1,11 +1,10 @@
 tableName: StorageBlobLogs
-analyticsRetentionInDays: 180
 analyticsTransform: |
   source
   | where OperationName == 'DeleteFile' or 
           OperationName == 'Flush' or 
           Category == 'StorageDelete'
 basicEnabled: true
-basicRetentionInDays: 8
+basicRetentionInDays: 180
 basicTransform: |
   source

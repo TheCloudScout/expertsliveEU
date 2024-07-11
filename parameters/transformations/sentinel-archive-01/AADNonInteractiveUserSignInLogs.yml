@@ -1,0 +1,8 @@
+tableName: AADNonInteractiveUserSignInLogs
+analyticsTransform: |
+  source
+  | project-away ConditionalAccessPolicies
+basicEnabled: true
+basicRetentionInDays: 365
+basicTransform: |
+  source
