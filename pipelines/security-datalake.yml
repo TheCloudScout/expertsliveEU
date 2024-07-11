@@ -1,0 +1,508 @@
+# This pipeline will deploy the resources needed for Microsoft Sentinel Cloud-SIEM
+# but also components needed for creating a hybrid setups with RSA Netwitness
+# by leveraging Azure Logic Apps and Azure Event Hub
+
+name: CloudSIEM-Sentinel
+
+# schedules:
+# - cron: "0 0 * * *"
+#   displayName: Daily midnight build
+#   branches:
+#     include:
+#     - master
+
+parameters:
+- name: env
+  displayName: Select deployment environment
+  type: string
+  default: prd-weeu
+  values:
+  - nonprd-weeu
+  - nonprd-cus
+  - nonprd-eus2
+  - prd-weeu
+  - prd-cus
+  - prd-eus2
+
+
+pr: none
+
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:    
+    - resources/datacollectionendpoints
+    - parameters/datacollectionendpoints
+    - resources/datacollectionrules
+    - parameters/datacollectionrules
+    - resources/tablebaseddcr
+    - resources/eventhubs
+    - parameters/eventhubs
+    - resources/dataexplorer
+    - parameters/dataexplorer
+    - resources/querypacks
+    - parameters/querypacks
+    - resources/workbooks
+    - parameters/workbooks
+    - resources/loganalyticsworkspace
+    - parameters/loganalyticsworkspaces
+    - resources/actiongroup
+    - parameters/actiongroups
+    - parameters/sentinelhealthmonitoring
+    - resources/metricAlerts
+    - parameters/sentinelqueryalert
+
+    - pipelines/cloudsiem-dataexplorer.yml
+    - pipelines/parameters/environment-variables*.yml
+
+    - templates/get-service-connection-credentials.yml
+    - templates/prerequisites.yml
+    - templates/sentinel-workspace.yml
+    - templates/query-packs-pipeline.yml
+    - templates/workbooks-pipeline.yml
+    - templates/data-collection-rules-pipeline.yml
+    - templates/table-based-dcr.yml
+    - templates/action-group.yml
+    - templates/monitor-query-alert.yml
+
+    - scripts/set-sentinel-health-monitoring.ps1
+
+variables:
+  scriptResourceProvider: 'scripts/Set-ResourceGroup.ps1'
+  scriptLogicApp: 'scripts/Set-LogicApp.ps1'
+
+  # Generic
+  repositoryRef: $[ resources.repositories.self.ref ]
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: MicrosoftSentinel
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+
+    displayName: 'Microsoft Sentinel "${{ parameters.env }}"'
+    jobs:
+      - job: azureSentinelWeUJob
+        displayName: 'Microsoft Sentinel'
+        steps:
+          # Retrieve Service Connection credentials
+          - template: templates/get-service-connection-credentials.yml
+            parameters:
+              serviceconnection_name: ${{ variables.serviceConnection }}
+
+          # Register Resource Providers and create Resource Group
+          - template: templates/prerequisites.yml
+            parameters:
+              deploymentName:                   'ResourceProvidersAndResourceGroupDeployment_${{ variables.location }}'
+              serviceconnection_name:           ${{ variables.serviceConnection }}
+              resourceProviderScript_location:  ${{ variables.scriptResourceProvider }}
+              subscriptionId:                   ${{ variables.subscriptionId }}
+              resourceGroupName:                ${{ variables.sentinelResourceGroup }}
+              location:                         ${{ variables.location }}
+              environment:                      ${{ parameters.env }}
+
+          # Deploy Microsoft Sentinel Workspaces
+          - template: templates/sentinel-workspace.yml
+            parameters:
+              deploymentName:                 'DeployLogAnalyticsWorkspace_${{ variables.location }}'
+              serviceconnection_name:         ${{ variables.serviceConnection }}
+              subscriptionId:                 ${{ variables.subscriptionId }}
+              resourceGroupName:              ${{ variables.sentinelResourceGroup }}
+              location:                       ${{ variables.location }}
+              parameterLogAnalytics_location: ${{ variables.logAnalyticsParameters }}
+
+          - task: AzurePowerShell@5
+            name: setSentinelHealthMonitoring
+            displayName: 'set Sentinel Health monitoring - diagnostic settings'
+            inputs:
+              azureSubscription: ${{ variables.serviceConnection }}
+              ScriptType: 'FilePath'
+              ScriptPath: 'scripts/set-sentinel-health-monitoring.ps1'
+              ScriptArguments: '-subscriptionId "${{ variables.subscriptionId }}" -sentinelResourceGroup "${{ variables.sentinelResourceGroup }}" -workspaceName "${{ variables.workspaceName }}" -diagnosticName "sentinel-health-monitoring-${{ parameters.env }}" -parameterFilePath "parameters/sentinelhealthmonitoring/sentinel-${{ parameters.env }}-01-healthmonitoring.parameter.json"'
+              FailOnStandardError: true
+              azurePowerShellVersion: 'LatestVersion'
+              pwsh: true
+
+  - stage: QueryPacks
+    dependsOn:
+    - MicrosoftSentinel
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: 'Query Packs "${{ parameters.env }}"'
+    jobs:
+      - job: QueryPacks
+        displayName: Deploy Query Packs
+        steps:
+          - template: templates/query-packs-pipeline.yml
+            parameters:
+              serviceConnection:  ${{ variables.serviceConnection }}
+              subscriptionId:     ${{ variables.subscriptionId }}
+              resourceGroupName:  ${{ variables.queryPackResourceGroup }}
+              location:           ${{ variables.location }}
+              deploymentNames:    [
+                                    'la-sentinel-querypack',
+                                    'la-sentinel-querypack-raytheon'
+                                  ]
+
+  - stage: Workbooks
+    dependsOn:
+      - MicrosoftSentinel
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: ' Workbooks "${{ parameters.env }}"'
+    jobs:
+      - job: Workbooks
+        displayName: Workbooks
+        steps:
+          # Deploy Microsoft Sentinel Workbooks
+          - template: templates/workbooks-pipeline.yml
+            parameters:
+              serviceConnection:  ${{ variables.serviceConnection }}
+              subscriptionId:     ${{ variables.subscriptionId }}
+              resourceGroupName:  ${{ variables.sentinelResourceGroup }}
+              location:           ${{ variables.location }}
+              overrideParameters: ${{ variables.resourceId }}
+              deploymentNames:    [
+                                    'Data-collection-health-monitoring',
+                                    'ad-auditing',
+                                    'draft-ddo-sentinel-health',
+                                    'e-commerce-detections',
+                                    'gso-azure-sentinel-report',
+                                    'mitre-attack-and-statistics',
+                                    'sentinel-workspace-healthcheck-and-eventsource-health',
+                                    'log-analytics-cost-distribution'
+                                  ]
+
+  - stage: DataCollectionEndpoints
+    dependsOn: []
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: 'Data Collection Endpoints "${{ parameters.env }}"'
+    jobs:
+      - job: DataCollectionEndpointLogstash
+        displayName: Data Collection Endpoint Logstash
+        steps:
+          # Deploy Data Collection Endpoint (DCE)
+          - task: AzureResourceManagerTemplateDeployment@3
+            name: DataCollectionEndptoinLogstash
+            displayName: 'Data Collection Endpoint Logstash "${{ parameters.env }}"'
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: ${{ variables.serviceConnection }}
+              subscriptionId: ${{ variables.subscriptionId }}
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: ${{ variables.sentinelResourceGroup }}
+              location: ${{ variables.location }}
+              templateLocation:  'Linked artifact'
+              csmFile: 'resources/datacollectionendpoints/datacollectionendpoint.json'
+              csmParametersFile: 'parameters/datacollectionendpoints/dce-sent-${{ parameters.env }}-01.parameters.json'
+              deploymentMode: 'Incremental'
+              deploymentOutputs: 'LogstashEndpointhOutput'
+
+  - stage: DataCollectionRules
+    dependsOn:
+    - MicrosoftSentinel
+    - DataCollectionEndpoints
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: 'Data Collection Rules "${{ parameters.env }}"'
+    jobs:
+      - job: DataCollectionRulesMMA
+        displayName: Data Collection Rules
+        steps:
+          # Deploy Data Collection Rules (DCR) to leverage MMA agent and ingest logs into Sentinel
+          - template: templates/data-collection-rules-pipeline.yml
+            parameters:
+              serviceConnection:  ${{ variables.serviceConnection }}
+              subscriptionId:     ${{ variables.subscriptionId }}
+              resourceGroupName:  ${{ variables.dcrResourceGroup }}
+              location:           ${{ variables.location }}
+              deploymentNames:    [
+                                    'dcr-sent-${{ parameters.env }}-01-dcs',
+                                    'dcr-sent-${{ parameters.env }}-01-dbs',
+                                    'dcr-sent-${{ parameters.env }}-02-dbs',
+                                    'dcr-sent-${{ parameters.env }}-01-dns',
+                                    'dcr-sent-${{ parameters.env }}-01-fss',
+                                    'dcr-sent-${{ parameters.env }}-01-web'
+                                  ]
+
+  - stage: TableBasedDataCollectionRules1
+    dependsOn:
+    - MicrosoftSentinel
+    - DataCollectionEndpoints
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: '[1] Data Collection Rules "${{ parameters.env }}"'
+    jobs:
+      - job: TableBasedDcrAnalytics
+        displayName: Table Based Data Collection Rules
+        steps:
+          # Deploy Data Collection Rules (DCR)
+          - template: templates/table-based-dcr.yml
+            parameters:
+              serviceConnection:  ${{ variables.serviceConnection }}
+              subscriptionId:     ${{ variables.subscriptionId }}
+              resourceGroupName:  ${{ variables.dcrResourceGroup }}
+              location:           ${{ variables.location }}
+              deploymentNames:    [
+                                    'dcr-sent-${{ parameters.env }}-01-ISIM-DB2',
+                                    'dcr-sent-${{ parameters.env }}-01-storesqldcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-checkpointdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-arubadcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-astardcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-cacheflowdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-ciscodcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-ciscomerakidcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-fortinetdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-hpunixdcr-01'
+                                  ]
+
+  - stage: TableBasedDataCollectionRules2
+    dependsOn:
+    - MicrosoftSentinel
+    - DataCollectionEndpoints
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: '[2] Data Collection Rules "${{ parameters.env }}"'
+    jobs:
+      - job: TableBasedDcrAnalytics
+        displayName: Table Based Data Collection Rules
+        steps:
+          # Deploy Data Collection Rules (DCR)
+          - template: templates/table-based-dcr.yml
+            parameters:
+              serviceConnection:  ${{ variables.serviceConnection }}
+              subscriptionId:     ${{ variables.subscriptionId }}
+              resourceGroupName:  ${{ variables.dcrResourceGroup }}
+              location:           ${{ variables.location }}
+              deploymentNames:    [
+                                    'dcr-sent-${{ parameters.env }}-01-openshiftdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-rhlinuxdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-snortdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-solarisdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-aixdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storeflowdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storeosquerydcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storeseceventsdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storesshdcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storesudodcr-01'
+                                  ]
+
+  - stage: TableBasedDataCollectionRules3
+    dependsOn:
+    - MicrosoftSentinel
+    - DataCollectionEndpoints
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: '[3] Data Collection Rules "${{ parameters.env }}"'
+    jobs:
+      - job: TableBasedDcrAnalytics
+        displayName: Table Based Data Collection Rules
+        steps:
+          # Deploy Data Collection Rules (DCR)
+          - template: templates/table-based-dcr.yml
+            parameters:
+              serviceConnection:  ${{ variables.serviceConnection }}
+              subscriptionId:     ${{ variables.subscriptionId }}
+              resourceGroupName:  ${{ variables.dcrResourceGroup }}
+              location:           ${{ variables.location }}
+              deploymentNames:    [
+                                    'dcr-sent-${{ parameters.env }}-01-storeurldcr-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storesqldcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-checkpointdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-arubadcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-astardcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-cacheflowdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-ciscodcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-ciscomerakidcrb-01'
+                                  ]
+
+  - stage: TableBasedDataCollectionRules4
+    dependsOn:
+    - MicrosoftSentinel
+    - DataCollectionEndpoints
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: '[4] Data Collection Rules "${{ parameters.env }}"'
+    jobs:
+      - job: TableBasedDcrAnalytics
+        displayName: Table Based Data Collection Rules
+        steps:
+          # Deploy Data Collection Rules (DCR)
+          - template: templates/table-based-dcr.yml
+            parameters:
+              serviceConnection:  ${{ variables.serviceConnection }}
+              subscriptionId:     ${{ variables.subscriptionId }}
+              resourceGroupName:  ${{ variables.dcrResourceGroup }}
+              location:           ${{ variables.location }}
+              deploymentNames:    [
+                                    'dcr-sent-${{ parameters.env }}-01-fortinetdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-hpunixdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-openshiftdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-rhlinuxdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-snortdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-solarisdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-aixdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storeflowdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storeosquerydcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storeseceventsdcrb-01'
+                                  ]
+
+  - stage: TableBasedDataCollectionRules5
+    dependsOn:
+    - MicrosoftSentinel
+    - DataCollectionEndpoints
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: '[5] Data Collection Rules "${{ parameters.env }}"'
+    jobs:
+      - job: TableBasedDcrAnalytics
+        displayName: Table Based Data Collection Rules
+        steps:
+          # Deploy Data Collection Rules (DCR)
+          - template: templates/table-based-dcr.yml
+            parameters:
+              serviceConnection:  ${{ variables.serviceConnection }}
+              subscriptionId:     ${{ variables.subscriptionId }}
+              resourceGroupName:  ${{ variables.dcrResourceGroup }}
+              location:           ${{ variables.location }}
+              deploymentNames:    [
+                                    'dcr-sent-${{ parameters.env }}-01-logstash-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storesshdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storesudodcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-storeurldcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-nexposevulnerabilitydcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-bluecoatproxydcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-f5asmdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-dhcpdcrb-01'
+                                    
+                                  ]
+
+  - stage: TableBasedDataCollectionRules6
+    dependsOn:
+    - MicrosoftSentinel
+    - DataCollectionEndpoints
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: '[6] Data Collection Rules "${{ parameters.env }}"'
+    jobs:
+      - job: TableBasedDcrAnalytics
+        displayName: Table Based Data Collection Rules
+        steps:
+          # Deploy Data Collection Rules (DCR)
+          - template: templates/table-based-dcr.yml
+            parameters:
+              serviceConnection:  ${{ variables.serviceConnection }}
+              subscriptionId:     ${{ variables.subscriptionId }}
+              resourceGroupName:  ${{ variables.dcrResourceGroup }}
+              location:           ${{ variables.location }}
+              deploymentNames:    [
+                                    'dcr-sent-${{ parameters.env }}-01-ocidatasafe-01',
+                                    'dcr-sent-${{ parameters.env }}-01-nss-cloud-audit-01',
+                                    'dcr-sent-${{ parameters.env }}-01-blueconicapi-01',
+                                    'dcr-sent-${{ parameters.env }}-01-logstash-01',
+                                    'dcr-sent-${{ parameters.env }}-01-symantecserverdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-infobloxdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-erponapsisdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-defaultdcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-avproxydcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-attivodcrb-01',
+                                    'dcr-sent-${{ parameters.env }}-01-emda-01'
+                                  ]
+
+  - stage: TextBasedDataCollectionRules
+    dependsOn:
+    - MicrosoftSentinel
+    - DataCollectionEndpoints
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: 'Text Based Data Collection Rules "${{ parameters.env }}"'
+    jobs:
+      - job: TextBasedDcrAnalytics
+        displayName: Table Based Data Collection Rules
+        steps:
+          # Deploy Data Collection Rules (DCR)
+          - template: templates/text-based-dcr.yml
+            parameters:
+              serviceConnection:  ${{ variables.serviceConnection }}
+              subscriptionId:     ${{ variables.subscriptionId }}
+              resourceGroupName:  ${{ variables.dcrResourceGroup }}
+              location:           ${{ variables.location }}
+              deploymentNames:    [
+                                    'dcr-sent-${{ parameters.env }}-01-intsim0-01',
+                                    'dcr-sent-${{ parameters.env }}-01-idsslapd2-01'
+                                  ]
+
+
+  - stage: QueryMonitoring
+    dependsOn:
+    - MicrosoftSentinel
+    # Branch is master or environment is nonprd
+    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
+    variables:
+      - template: parameters/environment-variables-${{ parameters.env }}.yml
+
+    displayName: 'Monitoring "${{ parameters.env }}"'
+    jobs:
+    - job:
+      displayName: Deploy Monitoring Resources
+      steps:
+        - template: templates/action-group.yml
+          parameters:
+            serviceConnection:  ${{ variables.serviceConnection }}
+            subscriptionId:     ${{ variables.subscriptionId }}
+            resourceGroupName:  ${{ variables.monitoringResourceGroup }}
+            location:           ${{ variables.location }}
+            deploymentNames:    [
+                                  'ag-query-monitoring-${{ parameters.env }}'
+                                ]
+
+        - template: templates/monitor-query-alert.yml
+          parameters:
+            serviceConnection:  ${{ variables.serviceConnection }}
+            subscriptionId:     ${{ variables.subscriptionId }}
+            resourceGroupName:  ${{ variables.monitoringResourceGroup }}
+            location:           ${{ variables.location }}
+            deploymentNames:    [
+                                  'dataconnector-health-${{ parameters.env }}',
+                                  'new-table-alert-${{ parameters.env }}'
+                                ]

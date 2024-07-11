@@ -1,0 +1,616 @@
+.create table Cisco_CL ( ls_timestamp: datetime, ls_version: string, connector_host: string, Country: string, host: string, message: string, type: string )
+
+.create-or-alter table Cisco_CL ingestion json mapping 'ciscocl_mapping' '[ { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table Store_Flow_CL ( ls_timestamp: datetime, ls_version: string, connector_host: string, Country: string, host: string, loghost: string, log_time: string, log_type: string, message: string, port: int, priority: string, sentinelTable: string, sys_day: string, sys_month: string, sys_year: string, tags: dynamic, type: string )
+
+.create-or-alter table Store_Flow_CL ingestion json mapping 'storeflowcl_mapping' '[ { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "loghost", "path": "$[\'loghost\']", "datatype": "", "transform": null }, { "column": "log_time", "path": "$[\'log_time\']", "datatype": "", "transform": null }, { "column": "log_type", "path": "$[\'log_type\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "port", "path": "$[\'port\']", "datatype": "", "transform": null }, { "column": "priority", "path": "$[\'priority\']", "datatype": "", "transform": null }, { "column": "sentinelTable", "path": "$[\'sentinelTable\']", "datatype": "", "transform": null }, { "column": "sys_day", "path": "$[\'sys_day\']", "datatype": "", "transform": null }, { "column": "sys_month", "path": "$[\'sys_month\']", "datatype": "", "transform": null }, { "column": "sys_year", "path": "$[\'sys_year\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table Store_Osquery_CL ( ls_timestamp: datetime, ls_version: string, connector_host: string, Country: string, host: string, loghost: string, log_time: string, log_type: string, message: string, pid: string, port: int, priority: string, sentinelTable: string, sys_day: string, sys_month: string, sys_year: string, tags: dynamic, type: string )
+
+.create-or-alter table Store_Osquery_CL ingestion json mapping 'storeosquerycl_mapping' '[ { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "loghost", "path": "$[\'loghost\']", "datatype": "", "transform": null }, { "column": "log_time", "path": "$[\'log_time\']", "datatype": "", "transform": null }, { "column": "log_type", "path": "$[\'log_type\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "pid", "path": "$[\'pid\']", "datatype": "", "transform": null }, { "column": "port", "path": "$[\'port\']", "datatype": "", "transform": null }, { "column": "priority", "path": "$[\'priority\']", "datatype": "", "transform": null }, { "column": "sentinelTable", "path": "$[\'sentinelTable\']", "datatype": "", "transform": null }, { "column": "sys_day", "path": "$[\'sys_day\']", "datatype": "", "transform": null }, { "column": "sys_month", "path": "$[\'sys_month\']", "datatype": "", "transform": null }, { "column": "sys_year", "path": "$[\'sys_year\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table Sys_openshift_CL ( ls_timestamp: datetime, ls_version: string, connector_host: string, Country: string, host: string, message: string, port: int, sentinelTable: string, sys_day: string, sys_month: string, sys_year: string, tags: dynamic, type: string )
+
+.create-or-alter table Sys_openshift_CL ingestion json mapping 'sysopenshiftcl_mapping' '[ { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "port", "path": "$[\'port\']", "datatype": "", "transform": null }, { "column": "sentinelTable", "path": "$[\'sentinelTable\']", "datatype": "", "transform": null }, { "column": "sys_day", "path": "$[\'sys_day\']", "datatype": "", "transform": null }, { "column": "sys_month", "path": "$[\'sys_month\']", "datatype": "", "transform": null }, { "column": "sys_year", "path": "$[\'sys_year\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table Sys_openshift_CL_Parsed (ls_timestamp:datetime, ls_version:string, connector_host:string, Country:string, host:string, message:string, port:int, sentinelTable:string, tags:dynamic, type:string, SrcIpAddr:string, EventCode:string, UserAgentString:string, AuthDecision:string, AuthReason:string, EventStartTime:datetime, RequestURI:string, verb:string, DvcId:guid, DvcSequence:string, AuditID:guid, stage:string, ActorUsername:string, ActorUserUid:guid, UserGroups:dynamic, ApiVersion:string, ApiGroup:string, TimeGenerated:datetime, DvcFDQN:string, DvcHostname:string, DvcDomain:string, EventResult:string, EventProduct:string, EventVendor:string, EventCount:int, EventType:string)
+
+.create-or-alter function Sys_openshift_CL_Parser()
+{ 
+Sys_openshift_CL
+| extend json = parse_json(message)
+| extend
+    SrcIpAddr = tostring(json.sourceIPs[0]),
+    EventCode = tostring(json.responseStatus.code),
+    UserAgentString = tostring(json.userAgent),
+    AuthDecision = tostring(json.annotations.["authorization.k8s.io/decision"]),
+    AuthReason = tostring(json.annotations.["authorization.k8s.io/reason"]),
+    EventStartTime = todatetime(json.requestReceivedTimestamp),
+    RequestURI = tostring(json.requestURI),
+    verb = tostring(json.verb),
+    DvcId = toguid(json.openshift.cluster_id),
+    DvcSequence = tostring(json.openshift.sequence),
+    AuditID = toguid(json.auditID),
+    stage = tostring(json.stage),
+    ActorUsername = tostring(json.user.username),
+    ActorUserUid = toguid(json.user.uid),
+    AuthReason2 = tostring(json.responseStatus.reason),
+    UserGroups = json.user.groups,
+    ApiVersion = tostring(json.objectRef.apiVersion),
+    ApiGroup = tostring(json.objectRef.apiGroup),
+    TimeGenerated = todatetime(json.timestamp),
+    DvcFDQN = host 
+| extend DvcHostname = split(host, @'.')
+| extend
+    DvcHostname = tostring(DvcHostname[0]),
+    DvcDomain = extract(@'^\w+\.(.+)', 1, DvcFDQN),
+    AuthReason = iff(isnotempty(AuthReason2), AuthReason2, AuthReason),
+    EventResult = case(EventCode startswith '2', 'Success', EventCode startswith'3', 'Success', EventCode startswith '1', 'Success', stage in("RequestReceived", "ResponseComplete") , "NA", 'Failure'),
+    EventProduct = "Openshift",
+    EventVendor = "Red Hat",
+    EventCount = toint(1),
+    EventType = "Logon"
+| project-away json, sys_day, sys_month, sys_year, AuthReason2
+}
+
+.alter table Sys_openshift_CL_Parsed policy update @'[{"Source": "Sys_openshift_CL", "Query": "Sys_openshift_CL_Parser()", "IsEnabled": "True", "IsTransactional": true}]'
+
+.create table ZScaler_DNS_CL ( ls_timestamp: datetime, ls_version: string, connector_host: string, Country: string, host: string, message: string, port: int, sentinelTable: string, sys_day: string, sys_month: string, sys_year: string, tags: dynamic, type: string )
+
+.create-or-alter table ZScaler_DNS_CL ingestion json mapping 'zscalerwebcl_mapping' '[ { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "port", "path": "$[\'port\']", "datatype": "", "transform": null }, { "column": "sentinelTable", "path": "$[\'sentinelTable\']", "datatype": "", "transform": null }, { "column": "sys_day", "path": "$[\'sys_day\']", "datatype": "", "transform": null }, { "column": "sys_month", "path": "$[\'sys_month\']", "datatype": "", "transform": null }, { "column": "sys_year", "path": "$[\'sys_year\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table FW_PA_NLADCC_CL ( connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, port: int, tags: dynamic, type: string )
+
+.create-or-alter table FW_PA_NLADCC_CL ingestion json mapping 'fwpanladcccl_mapping' '[ { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "port", "path": "$[\'port\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table Bluecoat_proxy_BE_CL ( connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, tags: dynamic, type: string )
+
+.create-or-alter table Bluecoat_proxy_BE_CL ingestion json mapping 'bluecoatproxybecl_mapping' '[ { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table Bluecoat_proxy_BE_CL_Parsed (connector_host:string, Country:string, host:string, ls_timestamp:datetime, ls_version:string, message:string, tags:dynamic, type:string, logTime:datetime, time_taken:long, c_ip:string, dv_userdn:string, dv_auth_groups:string, hostname:string, hostip:string, cs_userdn:string, cs_auth_groups:string, exception_id:string, sc_filter_result:string, cs_categories:dynamic, cs_referrer:string, sc_status:string, s_action:string, cs_method:string, content_type:dynamic, cs_uri_scheme:string, cs_host:string, cs_uri_port:string, cs_uri_path:string, cs_uri_query:string, cs_uri_extension:string, cs_user_agent:string, s_ip:string, sent_bytes:long, received_bytes:long, virus_id:string, app_name:string, app_operation:string, src_port:string, cs_threat_risk:string, sid:string, country:string)
+
+.create-or-alter function Bluecoat_proxy_BE_CL_Parser()
+{ 
+Bluecoat_proxy_BE_CL
+| where tags has "Bluecoat"
+| where message !startswith "#"                                 // Remove unrelated logpoint logs from ftp files.
+// Parse 1/3 of 'message'. Seperated due to extract_all() operator limited to 16 regex groups
+| extend Parser = extract_all(@'^(\d{4}\-\d{2}-\d{2})\s+(\d{2}\:\d{2}:\d{2})\s+(\d+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+([\S\s]+)',dynamic([1,2,3,4,5,6,7,8,9,10,11,12]), message)
+| mv-expand Parser
+| extend logTime = todatetime(strcat(tostring(Parser[0]),'T',tostring(Parser[1]))), 
+    time_taken = tolong(Parser[2]), 
+    c_ip = tostring(Parser[3]), 
+    dv_userdn = tostring(Parser[4]),                            // New field compare to Microsoft parser on Github
+    dv_auth_groups = replace(@"%20",@'',tostring(Parser[5])),   // New field compare to Microsoft parser on Github
+    hostname = tostring(Parser[6]),                             // New field compare to Microsoft parser on Github
+    hostip = tostring(Parser[7]),                               // New field compare to Microsoft parser on Github
+    cs_userdn = tostring(Parser[8]), 
+    cs_auth_groups= replace(@"%20",@'',tostring(Parser[9])), 
+    exception_id = tostring(Parser[10]), 
+    RemainingString1 = Parser[11]
+// Parse 2/3 of 'message'
+| extend Parser2 = extract_all(@'^(\S+)\s+\"([\w\s\)\(;\/_-]+)\"\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+([\S\s]+)',dynamic([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]), tostring(RemainingString1))
+| mv-expand Parser2
+| extend sc_filter_result = tostring(Parser2[0]), 
+    cs_categories = split(Parser2[1],";"),
+    cs_referrer = tostring(Parser2[2]), 
+    sc_status = tostring(Parser2[3]), 
+    s_action = tostring(Parser2[4]), 
+    cs_method= tostring(Parser2[5]), 
+    content_type = split(replace(@"%20",@'',tostring(Parser2[6])),";"), 
+    cs_uri_scheme = tostring(Parser2[7]), 
+    cs_host = tostring(Parser2[8]), 
+    cs_uri_port = tostring(Parser2[9]), 
+    cs_uri_path = tostring(Parser2[10]), 
+    cs_uri_query = tostring(Parser2[11]), 
+    cs_uri_extension = tostring(Parser2[12]),
+    RemainingString2 = Parser2[13]
+// Parse 3/3 of 'message'
+| extend Parser3 = extract_all(@'^(\"([\w\s\)\,\.\(\;\:\/\_\-\|\}\{\%\=\+\?\<\>\#\]\[]+)\"|(\S+))\s+(\S+)\s+(\S+)\s+(\d+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)',dynamic([1,2,3,4,5,6,7,8,9,10,12,13,14,15,16]), tostring(RemainingString2))
+| mv-expand Parser3
+| extend cs_user_agent = tostring(Parser3[1]),
+    s_ip = tostring(Parser3[3]), 
+    sent_bytes =  tolong(Parser3[4]),
+    received_bytes = tolong(Parser3[5]), 
+    virus_id = tostring(Parser3[6]),
+    app_name = tostring(Parser3[7]), 
+    app_operation = tostring(Parser3[8]), 
+    src_port = tostring(Parser3[9]), 
+    cs_threat_risk = tostring(Parser3[11]),
+    sid = tostring(Parser3[10]),                                // New field compare to Microsoft parser on Github
+    country = replace(@"%20",@' ',tostring(Parser3[12]))
+| project-away Parser, Parser2, Parser3, RemainingString1, RemainingString2 // keep 'message' for when parser might fail
+}
+
+.alter table Bluecoat_proxy_BE_CL_Parsed policy update @'[{"Source": "Bluecoat_proxy_BE_CL", "Query": "Bluecoat_proxy_BE_CL_Parser()", "IsEnabled": "True", "IsTransactional": true}]'
+
+.create table Cisco_ISE_Wireless_BE_CL ( connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, tags: dynamic, type: string )
+
+.create-or-alter table Cisco_ISE_Wireless_BE_CL ingestion json mapping 'ciscoisewirelessbecl_mapping' '[ { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table DB_MSSQL_NL_CL ( applicationname: string, category_id: int, clientprocessid: int, connector_host: string, Country: string, databaseid: int, databasename: string, eventclass: int, eventsequence: int, groupid: int, hostname: string, loginname: string, ls_timestamp: datetime, ls_version: string, name: string, ntdomainname: string, ntusername: string, requestid: int, servername: string, sessionloginname: string, spid: int, starttime: datetime, sys_day: string, sys_month: string, sys_year: string, tags: dynamic, textdata: string, trace_event_id: int, transactionid: int, xactsequence: int )
+
+.create-or-alter table DB_MSSQL_NL_CL ingestion json mapping 'dbmssqlnlcl_mapping' '[ { "column": "applicationname", "path": "$[\'applicationname\']", "datatype": "", "transform": null }, { "column": "category_id", "path": "$[\'category_id\']", "datatype": "", "transform": null }, { "column": "clientprocessid", "path": "$[\'clientprocessid\']", "datatype": "", "transform": null }, { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "databaseid", "path": "$[\'databaseid\']", "datatype": "", "transform": null }, { "column": "databasename", "path": "$[\'databasename\']", "datatype": "", "transform": null }, { "column": "eventclass", "path": "$[\'eventclass\']", "datatype": "", "transform": null }, { "column": "eventsequence", "path": "$[\'eventsequence\']", "datatype": "", "transform": null }, { "column": "groupid", "path": "$[\'groupid\']", "datatype": "", "transform": null }, { "column": "hostname", "path": "$[\'hostname\']", "datatype": "", "transform": null }, { "column": "loginname", "path": "$[\'loginname\']", "datatype": "", "transform": null }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "name", "path": "$[\'name\']", "datatype": "", "transform": null }, { "column": "ntdomainname", "path": "$[\'ntdomainname\']", "datatype": "", "transform": null }, { "column": "ntusername", "path": "$[\'ntusername\']", "datatype": "", "transform": null }, { "column": "requestid", "path": "$[\'requestid\']", "datatype": "", "transform": null }, { "column": "servername", "path": "$[\'servername\']", "datatype": "", "transform": null }, { "column": "sessionloginname", "path": "$[\'sessionloginname\']", "datatype": "", "transform": null }, { "column": "spid", "path": "$[\'spid\']", "datatype": "", "transform": null }, { "column": "starttime", "path": "$[\'starttime\']", "datatype": "", "transform": null }, { "column": "sys_day", "path": "$[\'sys_day\']", "datatype": "", "transform": null }, { "column": "sys_month", "path": "$[\'sys_month\']", "datatype": "", "transform": null }, { "column": "sys_year", "path": "$[\'sys_year\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "textdata", "path": "$[\'textdata\']", "datatype": "", "transform": null }, { "column": "trace_event_id", "path": "$[\'trace_event_id\']", "datatype": "", "transform": null }, { "column": "transactionid", "path": "$[\'transactionid\']", "datatype": "", "transform": null }, { "column": "xactsequence", "path": "$[\'xactsequence\']", "datatype": "", "transform": null } ]'
+
+.create table DHCP_BE_CL ( connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, tags: dynamic, type: string )
+
+.create-or-alter table DHCP_BE_CL ingestion json mapping 'dhcpbecl_mapping' '[ { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table F5_ASM_BE_CL ( connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, tags: dynamic, type: string )
+
+.create-or-alter table F5_ASM_BE_CL ingestion json mapping 'f5asmbecl_mapping' '[ { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table FW_Checkpoint_CL ( connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, tags: dynamic, type: string )
+
+.create-or-alter table FW_Checkpoint_CL ingestion json mapping 'fwcheckpointclcl_mapping' '[ { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table Logstash_BE_CL ( connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, tags: dynamic, type: string )
+
+.create-or-alter table Logstash_BE_CL ingestion json mapping 'logstashbecl_mapping' '[ { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table Nexpose_Vulnerability_BE_CL ( connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, tags: dynamic, type: string )
+
+.create-or-alter table Nexpose_Vulnerability_BE_CL ingestion json mapping 'nexposevulnerabilitybecl_mapping' '[ { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table Store_SQL_NL_CL ( connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, port: int, sentinelTable: string, sys_day: string, sys_month: string, sys_year: string, tags: dynamic, type: string )
+
+.create-or-alter table Store_SQL_NL_CL ingestion json mapping 'storesqlnlcl_mapping' '[ { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "", "transform": null }, { "column": "Country", "path": "$[\'Country\']", "datatype": "", "transform": null }, { "column": "host", "path": "$[\'host\']", "datatype": "", "transform": null }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "", "transform": null }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "", "transform": null }, { "column": "message", "path": "$[\'message\']", "datatype": "", "transform": null }, { "column": "port", "path": "$[\'port\']", "datatype": "", "transform": null }, { "column": "sentinelTable", "path": "$[\'sentinelTable\']", "datatype": "", "transform": null }, { "column": "sys_day", "path": "$[\'sys_day\']", "datatype": "", "transform": null }, { "column": "sys_month", "path": "$[\'sys_month\']", "datatype": "", "transform": null }, { "column": "sys_year", "path": "$[\'sys_year\']", "datatype": "", "transform": null }, { "column": "tags", "path": "$[\'tags\']", "datatype": "", "transform": null }, { "column": "type", "path": "$[\'type\']", "datatype": "", "transform": null } ]'
+
+.create table ISAM_Appliance_CL ( connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, sentinelTable: string, sys_day: string, sys_month: string, sys_year: string, tags: dynamic, type: string )
+
+.create-or-alter table ISAM_Appliance_CL ingestion json mapping 'isamappliancecl_mapping' '[ { "column": "connector_host", "path": "$[\'connector_host\']", "datatype": "" }, { "column": "Country", "path": "$[\'Country\']", "datatype": "" }, { "column": "host", "path": "$[\'host\']", "datatype": "" }, { "column": "ls_timestamp", "path": "$[\'@timestamp\']", "datatype": "" }, { "column": "ls_version", "path": "$[\'@version\']", "datatype": "" }, { "column": "message", "path": "$[\'message\']", "datatype": "" }, { "column": "sentinelTable", "path": "$[\'sentinelTable\']", "datatype": "" }, { "column": "sys_day", "path": "$[\'sys_day\']", "datatype": "" }, { "column": "sys_month", "path": "$[\'sys_month\']", "datatype": "" }, { "column": "sys_year", "path": "$[\'sys_year\']", "datatype": "" }, { "column": "tags", "path": "$[\'tags\']", "datatype": "" }, { "column": "type", "path": "$[\'type\']", "datatype": "" }]'
+
+.create table Unknown_Devices_CL (connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, ['tags']: dynamic, ['type']: string) 
+
+.create-or-alter table Unknown_Devices_CL ingestion json mapping 'unknowndevicescl_mapping' '[ { "column" : "connector_host" , "path": "$[\'connector_host\']","datatype":""}, {"column":"Country","path":"$[\'Country\']","datatype":""},{"column":"host","path":"$[\'host\']","datatype":""},{"column":"ls_timestamp","path": "$[\'@timestamp\']","datatype":""},{"column":"ls_version","path": "$[\'@version\']","datatype":""},{"column":"message","path":"$[\'message\']","datatype":""},{"column":"tags","path":"$[\'tags\']","datatype":""},{"column":"type","path":"$[\'type\']","datatype":""} ]'
+
+.create table UX_aix_CL (connector_host: string, Country: string, host: string, ls_timestamp: datetime, ls_version: string, message: string, ['tags']: dynamic, ['type']: string) 
+
+.create-or-alter table UX_aix_CL ingestion json mapping 'uxaixcl_mapping' '[{"column":"connector_host","path":"$[\'connector_host\']","datatype":""},{"column":"Country","path":"$[\'Country\']","datatype":""},{"column":"host","path":"$[\'host\']","datatype":""},{"column":"ls_timestamp","path": "$[\'@timestamp\']","datatype":""},{"column":"ls_version","path": "$[\'@version\']","datatype":""},{"column":"message","path":"$[\'message\']","datatype":""},{"column":"tags","path":"$[\'tags\']","datatype":""},{"column":"type","path":"$[\'type\']","datatype":""}]'
+
+.create table FW_Fortinet_CL_Parsed (connector_host:string, Country:string, host:string, ls_timestamp:datetime, ls_version:string, message:string, tags:dynamic, EventOriginalType:string, OriginalLogFormat:string, TransactionIdHex:string, DnsQuery:string, DnsQueryType:string, SrcNatIpAddr:string, SrcNatPortNumber:int, SrcHostname:string, DstPackets:int, SrcPackets:int, HttpRequestMethod:string, EventOriginalResultDetails:string, DvcZone:string, DstMacAddr:string, SrcAppName:string, SrcMacAddr:string, DvcHostname:string, DvcId:string, tz:string, EventOriginalSubtype:string, eventtype:string, SrcAppType:string, SrcIpAddr:string, SrcGeoCountry:string, DstIpAddr:string, DstGeoCountry:string, SrcPortNumber:int, DstPortNumber:int, SrcInterfaceName:string, DstInterfaceName:string, DeviceAction:string, NetworkApplication:string, NetworkSessionId:string, profile:string, HttpHost:string, reqtype:string, Url:string, EventResultDetails:string, UrlCategory:string, TranscationIdHex:string, type:string, Dvc:string, EventVendor:string, EventProduct:string, DvcOsVersion:string, DvcOriginalAction:string, TargetUsername:string, severity:string, ThreatId:int, ThreatName:string, craction:int, ThreatRiskLevel:int, crlevel:string, ThreatRef:string, deviceSeverity:string, TzOffset:string, PolicyName:string, NetworkProtocol:string, DvcAction:string, EventResult:string, EventSeverity:string, EventSchema:string, TimeGenerated:datetime, EventCount:int, NetworkPackets:long )
+
+.create-or-alter function FW_Fortinet_CL_Parser() {
+  //
+    // This function takes Fortigatelogs and normalizes as much as possible into  NetworkSession, Authentication, Audit and WebSession ASIMs
+    // It  has to go through the data twice, one for fortinet format and another for CEF
+    // Where possible calculated parts will occur after the union to save on having to update multiple sections as key names don't always match
+    //
+let Actions=datatable(DeviceAction:string,DvcAction:string,EventResult:string,EventSeverity:string,EventSchema:string)
+    [ "reset client","Reset Source","Failure","Low","NetworkSession"
+    ,"reset server","Reset Destination","Failure","Low","NetworkSession"
+    ,"reset both","Reset","Failure","Low","NetworkSession"
+    ,"allow","Allow","Success","Informational","NetworkSession"
+    ,"accept", "Allow","Success","Informational","NetworkSession"
+    ,"deny","Deny","Failure","Low","NetworkSession"
+    ,"drop", "Drop","Failure","Low","NetworkSession"
+    ,"drop ICMP", "Drop ICMP","Failure","Low","NetworkSession"
+    ,"reset-client","Reset Source","Failure","Low","NetworkSession"
+    ,"client-rst","Reset Source","Failure","Low","NetworkSession"
+    ,"reset-server","Reset Destination","Failure","Low","NetworkSession"
+    ,"server-rst","Reset Destination","Failure","Low","NetworkSession"
+    ,"reset-both", "Reset","Failure","Low","NetworkSession"
+    ,"drop-icmp", "Drop ICMP","Failure","Low","NetworkSession"
+    ,"block","Blocked","Failure","Low","WebSession"
+    ,"blocked","Blocked","Failure","Low","WebSession"
+    ,"pass","Passsed","Success","Informational","WebSession"
+    ,"passthrough","Passsed","Success","Informational","WebSession"
+    ,"timeout","Timeout","Failure","Low","NetworkSession"
+    ,"ip-conn","Timeout","Failure","Low","NetworkSession"
+    ,"detected","Detected","NA","Low","NetworkSession"
+    ,"ssl-login-fail","Logon Failure", "Failure","Low","Authentication"
+    ,"ssl-web-close","Logout Succeess","Success","Informational","Authentication"
+    ,"device-redirect","Dns Query Denied","Failure","Low","Dns"];
+let ProtocolLookup=datatable(Protocol:int,NetworkProtocol:string)
+      [
+          "0","HOPOPT"
+          , "1","ICMP"
+          , "2","IGMP"
+          , "3","GGP"
+          , "4","IPv4"
+          , "5","ST"
+          , "6","TCP"
+          , "7","CBT"
+          , "8","EGP"
+          , "9","IGP"
+          , "10","BBN-RCC-MON"
+          , "11","NVP-II"
+          , "12","PUP"
+          , "13","ARGUS (deprecated)"
+          , "14","EMCON"
+          , "15","XNET"
+          , "16","CHAOS"
+          , "17","UDP"
+          , "18","MUX"
+          , "19","DCN-MEAS"
+          , "20","HMP"
+          , "21","PRM"
+          , "22","XNS-IDP"
+          , "23","TRUNK-1"
+          , "24","TRUNK-2"
+          , "25","LEAF-1"
+          , "26","LEAF-2"
+          , "27","RDP"
+          , "28","IRTP"
+          , "29","ISO-TP4"
+          , "30","NETBLT"
+          , "31","MFE-NSP"
+          , "32","MERIT-INP"
+          , "33","DCCP"
+          , "34","3PC"
+          , "35","IDPR"
+          , "36","XTP"
+          , "37","DDP"
+          , "38","IDPR-CMTP"
+          , "39","TP++"
+          , "40","IL"
+          , "41","IPv6"
+          , "42","SDRP"
+          , "43","IPv6-Route"
+          , "44","IPv6-Frag"
+          , "45","IDRP"
+          , "46","RSVP"
+          , "47","GRE"
+          , "48","DSR"
+          , "49","BNA"
+          , "50","ESP"
+          , "51","AH"
+          , "52","I-NLSP"
+          , "53","SWIPE (deprecated)"
+          , "54","NARP"
+          , "55","MOBILE"
+          , "56","TLSP"
+          , "57","SKIP"
+          , "58","IPv6-ICMP"
+          , "59","IPv6-NoNxt"
+          , "60","IPv6-Opts"
+          , "61",""
+          , "62","CFTP"
+          , "63",""
+          , "64","SAT-EXPAK"
+          , "65","KRYPTOLAN"
+          , "66","RVD"
+          , "67","IPPC"
+          , "68",""
+          , "69","SAT-MON"
+          , "70","VISA"
+          , "71","IPCV"
+          , "72","CPNX"
+          , "73","CPHB"
+          , "74","WSN"
+          , "75","PVP"
+          , "76","BR-SAT-MON"
+          , "77","SUN-ND"
+          , "78","WB-MON"
+          , "79","WB-EXPAK"
+          , "80","ISO-IP"
+          , "81","VMTP"
+          , "82","SECURE-VMTP"
+          , "83","VINES"
+          , "84","TTP"
+          , "84","IPTM"
+          , "85","NSFNET-IGP"
+          , "86","DGP"
+          , "87","TCF"
+          , "88","EIGRP"
+          , "89","OSPFIGP"
+          , "90","Sprite-RPC"
+          , "91","LARP"
+          , "92","MTP"
+          , "93","AX.25"
+          , "94","IPIP"
+          , "95","MICP (deprecated)"
+          , "96","SCC-SP"
+          , "97","ETHERIP"
+          , "98","ENCAP"
+          , "99",""
+          , "100","GMTP"
+          , "101","IFMP"
+          , "102","PNNI"
+          , "103","PIM"
+          , "104","ARIS"
+          , "105","SCPS"
+          , "106","QNX"
+          , "107","A/N"
+          , "108","IPComp"
+          , "109","SNP"
+          , "110","Compaq-Peer"
+          , "111","IPX-in-IP"
+          , "112","VRRP"
+          , "113","PGM"
+          , "114",""
+          , "115","L2TP"
+          , "116","DDX"
+          , "117","IATP"
+          , "118","STP"
+          , "119","SRP"
+          , "120","UTI"
+          , "121","SMP"
+          , "122","SM (deprecated)"
+          , "123","PTP"
+          , "124","ISIS over IPv4"
+          , "125","FIRE"
+          , "126","CRTP"
+          , "127","CRUDP"
+          , "128","SSCOPMCE"
+          , "129","IPLT"
+          , "130","SPS"
+          , "131","PIPE"
+          , "132","SCTP"
+          , "133","FC"
+          , "134","RSVP-E2E-IGNORE"
+          , "135","Mobility Header"
+          , "136","UDPLite"
+          , "137","MPLS-in-IP"
+          , "138","manet"
+          , "139","HIP"
+          , "140","Shim6"
+          , "141","WESP"
+          , "142","ROHC"
+          , "143","Ethernet"
+          , "253",""
+          , "254",""
+          , "255","Reserved"];
+let noncef=FW_Fortinet_CL
+// | sort by ls_timestamp desc 
+| where message !has 'CEF:'
+| extend 
+    message = substring(message, 5),
+    OriginalLogFormat = 'NOT_CEF'
+| parse-kv message as (xid:int, qname:string, qtype:string,transip:string, transport:int,srcname:string, sentpkt:int, rcvdpkt:int, httpmethod:string, reason:string, vd:string, dstmac:string, app:string, srcmac:string, devname:string, devid:string, eventtime:long, tz:string, type:string, subtype:string, eventtype:string, appcat:string, srcip:string, srccountry:string, dstip:string, dstcountry:string, srcport:int, dstport:int, srcintf:string, dstintf:string, proto:int, action:string, service:string, sessionid:string, profile:string, hostname:string, reqtype:string, url:string, msg:string, catdesc:string ) with (pair_delimiter=" ", kv_delimiter="=", quote='"')
+| project-rename 
+    DeviceAction = action,
+    DnsQuery = qname,
+    DnsQueryType = qtype,
+    DstGeoCountry = dstcountry,
+    DstInterfaceName = dstintf,
+    DstIpAddr = dstip,
+    DstPortNumber = dstport,
+    DvcHostname = devname,
+    DvcId = devid,
+    EventOriginalType = type,
+    EventResultDetails = msg,
+    HttpHost = hostname,
+    HttpRequestMethod = httpmethod,
+    NetworkApplication = service,
+    NetworkSessionId = sessionid,
+    SrcAppName = app,
+    SrcAppType = appcat,
+    SrcGeoCountry = srccountry,
+    SrcHostname = srcname,
+    SrcInterfaceName = srcintf,
+    SrcIpAddr = srcip,
+    SrcNatIpAddr = transip,
+    SrcNatPortNumber = transport,
+    SrcPortNumber = srcport,
+    TransactionIdHex = xid,
+    Url = url,
+    UrlCategory = catdesc
+//
+// sed removal of records if they exis
+| extend message = iff(isnotempty(DeviceAction), replace_regex(message, @'(action=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(DnsQuery), replace_regex(message, @'(qname=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(DnsQueryType), replace_regex(message, @'(qytpe=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(DstGeoCountry), replace_regex(message, @'(dstcountry=\"[\w\s]+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(DstInterfaceName), replace_regex(message, @'(dstintf=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(DstIpAddr), replace_regex(message, @'(dstip=\S+\s)', @'' ), message)
+| extend message = iff(isnotempty(DstPortNumber), replace_regex(message, @'(dstport=\d+\s)', @'' ), message)
+| extend message = iff(isnotempty(DvcHostname), replace_regex(message, @'(devname=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(DvcId), replace_regex(message, @'(devid=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(EventOriginalType), replace_regex(message, @'(type=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(EventResultDetails), replace_regex(message, @'(msg=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(HttpHost), replace_regex(message, @'(hostname=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(HttpRequestMethod), replace_regex(message, @'(httpmethod=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(NetworkApplication), replace_regex(message, @'(service=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(NetworkSessionId), replace_regex(message, @'(sessionid=\d+\s)', @'' ), message)
+| extend message = iff(isnotempty(SrcAppName), replace_regex(message, @'(app=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(SrcAppType), replace_regex(message, @'(appcat=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(SrcGeoCountry), replace_regex(message, @'(srccountry=\"[\w\s]+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(SrcHostname), replace_regex(message, @'(srcname=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(SrcInterfaceName), replace_regex(message, @'(srcintf=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(SrcIpAddr), replace_regex(message, @'(srcip=\S+\s)', @'' ), message)
+| extend message = iff(isnotempty(SrcNatIpAddr), replace_regex(message, @'(transip=\S+\s)', @'' ), message)
+| extend message = iff(isnotempty(SrcNatPortNumber), replace_regex(message, @'(transport=\d+\s)', @'' ), message)
+| extend message = iff(isnotempty(SrcPortNumber), replace_regex(message, @'(srcport=\d+\s)', @'' ), message)
+| extend message = iff(isnotempty(eventtime), replace_regex(message, @'(eventtime=\d+\s)', @'' ), message)
+| extend message = iff(isnotempty(Url), replace_regex(message, @'(url=\".+?\"\s)', @'' ), message)
+| extend message = iff(isnotempty(UrlCategory), replace_regex(message, @'(catdesc=\".+?\"\s?)', @'' ), message)
+| extend TranscationIdHex = tohex(TransactionIdHex)
+| extend TransactionIdHex = tostring(TranscationIdHex)
+| parse tz with Offset:string "0" Hours:int "00"
+;
+let cef=FW_Fortinet_CL
+//| sort by ls_timestamp desc 
+| where message has 'CEF:'
+| extend CEF = extract_all(@'(\S+)\sCEF:0\|(\S+?)\|(\S+?)\|(.*?)\|(.*?)\|(.*?)\|\d\|(.+)', message)
+| extend SyslogMessage = tostring(CEF[0][6]),
+    Dvc = tostring(CEF[0][0]),
+    EventVendor = tostring(CEF[0][1]),
+    EventProduct = tostring(CEF[0][2]),
+    DvcOsVersion = tostring(CEF[0][3]),
+    DvcOriginalAction = tostring(CEF[0][5]),
+    OriginalLogFormat = 'CEF'
+| project-away message, CEF
+| extend SyslogMessage = replace_string(SyslogMessage, ' ad.', ' ') // Some ov the VD add a lead in of ad.; flattening it for single kv parse
+| parse-kv SyslogMessage as (xid:int, qname:string, qtype:string, reason:string, duser:string, eventtype:string, severity:string, attackid:int, attack:string, craction:int, crscore:int, crlevel:string, ref:string, deviceOutboundInterface:string, deviceInboundInterface:string, deviceExternalId:string, dvchost:string, vd:string, eventtime:long, cat:string, subtype:string, deviceSeverity:string, src:string, shost:string, spt:int, dst:string, dpt:int, proto:int, act:string, sentpkt:int, rcvdpkt:int,  sourceTranslatedAddress:string, sourceTranslatedPort:int, srcmac:string, dstmac:string, request:string, dhost:string ) with (kv_delimiter="=", pair_delimiter=" ")
+| project-rename 
+    DeviceAction = act,
+    SrcIpAddr = src,
+    SrcPortNumber = spt,
+    DstIpAddr = dst,
+    DstPortNumber = dpt,
+    SrcHostname = shost,
+    Url = request, 
+    HttpHost = dhost,
+    ThreatId = attackid,
+    ThreatName = attack,
+    ThreatRiskLevel = crscore,
+    TargetUsername = duser,
+    DvcHostname = dvchost,
+    EventOriginalType = cat,
+    SrcInterfaceName = deviceInboundInterface,
+    DstInterfaceName = deviceOutboundInterface,
+    DvcId = deviceExternalId,
+    SrcNatIpAddr = sourceTranslatedAddress,
+    SrcNatPortNumber = sourceTranslatedPort,
+    ThreatRef = ref,
+    DnsQuery = qname,
+    DnsQueryType = qtype,
+    TransactionIdHex = xid
+| extend TranscationIdHex = tohex(TransactionIdHex)
+| extend TransactionIdHex = tostring(TranscationIdHex)
+| extend 
+    DstGeoCountry = extract(@'dstcountry=(.*?)\s\S+\=', 1, SyslogMessage),
+    TzOffset = extract(@'tz=(.*?)\s\S+\=', 1, SyslogMessage),
+    SrcGeoCountry = extract(@'srccountry=(.*?)\s\S+\=', 1, SyslogMessage),
+    PolicyName = extract(@'policyname=(.*?)\s\S+\=', 1, SyslogMessage),
+    NetworkApplication = extract(@'app=(.*?)\s\S+\=',1, SyslogMessage),
+    EventResultDetails = extract(@'msg=(.*?)\s\S+\=',1, SyslogMessage),
+    UrlCategory = extract(@'requestContext=(.*?)\s\S+\=',1, SyslogMessage)
+| parse TzOffset with Offset:string "0" Hours:int "00"
+//
+// sed removal of records if they exist
+| extend SyslogMessage = iff(isnotempty(DstGeoCountry), replace_regex(SyslogMessage, @'(dstcountry=.*?\s)(\S+\=)', @'\2'), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(SrcGeoCountry), replace_regex(SyslogMessage, @'(srccountry=.*?\s)(\S+\=)', @'\2'), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(PolicyName), replace_regex(SyslogMessage,@'(policyname=.*?\s)(\S+\=)', @'\2'), SyslogMessage)
+| extend SyslogMessage = iff(isnotempty(NetworkApplication), replace_regex(SyslogMessage, @'(app=.*?\s)(\S+\=)', @'\2'), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(EventResultDetails), replace_regex(SyslogMessage, @'(msg=.*?\s)(\S+\=)', @'\2'), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(UrlCategory), replace_regex(SyslogMessage, @'(requestContext=.*?\s)(\S+\=)', @'\2'), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(SrcIpAddr), replace_regex(SyslogMessage, @'(src=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(DstIpAddr), replace_regex(SyslogMessage, @'(dst=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(SrcPortNumber), replace_regex(SyslogMessage, @'(spt=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(DstPortNumber), replace_regex(SyslogMessage, @'(dpt=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(SrcHostname), replace_regex(SyslogMessage, @'(shot=\S+\s?)', @''), SyslogMessage)
+| extend SyslogMessage = iff(isnotempty(Url), replace_regex(SyslogMessage, @'(request=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(DeviceAction), replace_regex(SyslogMessage, @'(act=\S+\s?)', @''), SyslogMessage)
+| extend SyslogMessage = iff(isnotempty(HttpHost), replace_regex(SyslogMessage, @'(dhost=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(ThreatId), replace_regex(SyslogMessage, @'(attackid=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(ThreatName), replace_regex(SyslogMessage, @'(attack=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(ThreatRiskLevel), replace_regex(SyslogMessage, @'(crscore=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(TargetUsername), replace_regex(SyslogMessage, @'(duser=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(DvcHostname), replace_regex(SyslogMessage, @'(dvchost=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(EventOriginalType), replace_regex(SyslogMessage, @'(cat=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(SrcInterfaceName), replace_regex(SyslogMessage, @'(deviceInboundInterface=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(DstInterfaceName), replace_regex(SyslogMessage, @'(deviceOutboundInterface=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(DvcId), replace_regex(SyslogMessage, @'(deviceExternalId=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(SrcNatIpAddr), replace_regex(SyslogMessage, @'(sourceTranslatedAddress=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(SrcNatPortNumber), replace_regex(SyslogMessage, @'(sourceTranslatedPort=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(ThreatRef), replace_regex(SyslogMessage, @'(ref=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(DnsQuery), replace_regex(SyslogMessage, @'(qname=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(DnsQueryType), replace_regex(SyslogMessage, @'(qtype=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(TransactionIdHex), replace_regex(SyslogMessage, @'(xid=\S+\s?)', @''), SyslogMessage )
+| extend SyslogMessage = iff(isnotempty(eventtime), replace_regex(SyslogMessage, @'(eventtime=\S+\s?)', @''), SyslogMessage )
+| project-rename message = SyslogMessage
+// To Do 
+//
+// act - close EventEnd  | start = start of event, but not sure about the rest does it do it's middle of thes stream update?
+// crevel = threat level, can't fiund a way to decode that in their docs
+// need to work through Authentication and Audit
+// severity needs to be worked on with Threats, can probably do a coaleasce
+// need to find more system events
+;
+//
+// To do debugging of this you'll need to add takes in each of the functions or it'll just take return the number of records from the first
+//
+union noncef , cef
+// Shared field names
+| project-rename     
+    Protocol = proto,
+    SrcMacAddr = srcmac,
+    DstMacAddr = dstmac,
+    EventOriginalSubtype = subtype,
+    DvcZone = vd,
+    EventOriginalResultDetails = reason,
+    SrcPackets = rcvdpkt,
+    DstPackets = sentpkt
+| extend message = iff(isnotempty(Protocol), replace_regex(message, @'(proto=\d+\s)', @''), message )
+| extend message = iff(isnotempty(SrcPackets), replace_regex(message, @'(rcvdpkt=\d+\s)', @''), message )
+| extend message = iff(isnotempty(DstPackets), replace_regex(message, @'(sentpkt=\d+\s)', @''), message )
+| extend message = iff(isnotempty(SrcMacAddr), replace_regex(message, @'(srcmac=\S+\s)', @''), message )
+| extend message = iff(isnotempty(DstMacAddr), replace_regex(message, @'(dstmac=\S+\s)', @''), message )
+| extend message = iff(isnotempty(EventOriginalResultDetails), replace_regex(message, @'(reason=\S+\s)', @''), message )
+| extend message = iff(isnotempty(EventOriginalSubtype), replace_regex(message, @'(subtype=\"?\S+\"?\s)', @''), message )
+| extend message = iff(isnotempty(DvcZone), replace_regex(message, @'(vd=\S+\s)', @''), message )
+// Shared lookups
+| lookup ProtocolLookup on Protocol
+| lookup Actions on DeviceAction
+// Shared Conversions
+|extend
+    TimeGenerated = unixtime_nanoseconds_todatetime(eventtime),
+    EventCount = toint(1),
+    DstGeoCountry = iff(isempty(DstGeoCountry), tostring(geo_info_from_ip_address(DstIpAddr).country), DstGeoCountry),
+    SrcGeoCountry = iff(isempty(SrcGeoCountry), tostring(geo_info_from_ip_address(SrcIpAddr).country), SrcGeoCountry),
+    NetworkPackets = SrcPackets + DstPackets
+| extend 
+   TimeGenerated = datetime_add('hour', toint(Hours) * -1, TimeGenerated),
+    EventSchema = iff(eventtype == 'dns-response', 'DNS', EventSchema)
+| project-away 
+    Offset,
+    Hours,
+    eventtime,
+    Protocol 
+}
+
+.alter table FW_Fortinet_CL_Parsed policy update @'[{"Source": "FW_Fortinet_CL", "Query": "FW_Fortinet_CL_Parser()", "IsEnabled": "True", "IsTransactional": true}]'
+
+.add database ['logstash-archive'] viewers ('aadgroup=88e4b7b6-ffd3-4035-b442-9f21240e7789;AholdDelhaize.com')
+
+.add database ['logstash-archive'] viewers ('aadgroup=c2922424-eccb-4c80-b87a-e10d87a9f484;AholdDelhaize.com')
+
+.add database ['logstash-archive'] viewers ('aadgroup=5c947864-2ade-4d9a-8028-a73b08fbb870;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=edc60e6f-4ce8-482e-b7a9-c34841f19f2a;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=6a0e16d8-cc4c-4ddc-aac6-37e13ad57f38;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=47130ebd-b8de-4778-b6b0-adfa3e98abbf;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=da2c7cf5-d635-48bd-9c4a-09ce6f987446;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=b0d235d4-ce64-49ab-b3ed-78a1b7563cfc;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=1747a628-27b2-4383-97ef-6dbdc307198c;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=9962be69-11c7-4ab0-bfc4-7af7466b3e06;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=9e4e2893-e8f8-4307-bab8-4a9428ddf2ec;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=bbd5ef76-342a-4057-b00c-2906e48861fb;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=508fc8ac-f5f5-48fb-8eda-a2f41fafca3b;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=b4833b2a-0801-4887-9a8c-37e81f3c59ba;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=bfcc597d-63d8-429e-ad4f-42759ffaebb1;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=9fa015f2-25bb-4811-95f5-0040a29be9e4;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=167f9edf-4583-416b-a080-3a2933cd4cd3;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=735f7e44-1a65-48ca-8436-b86e1b6f612a;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=5ad8f062-743d-44ba-96d2-63b4c195e16f;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=835e6d37-36b6-46b8-9027-7a395a5dbddd;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadgroup=88e4b7b6-ffd3-4035-b442-9f21240e7789;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=b1ff5326-57d6-4450-b7f6-1c1778587859;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=a66ebdb4-7d8a-45a8-8dc0-ccaa261edb4b;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=f88ae772-4d3c-4210-bb00-5d937e101eb4;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=275683b2-5659-48df-bfee-b59cebc8c145;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=b059e948-e18a-4f68-a402-ba746b613d3f;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadapp=e1ec53aa-0d40-41eb-9a0a-268d5d2af497;AholdDelhaize.com')
+
+// New Role Groups
+.add database ['logstash-archive'] viewers ('aadgroup=4840ce71-9f95-463b-8425-46801eb9d347;AholdDelhaize.com')
+
+.add database ['logstash-archive'] ingestors ('aadgroup=f5f83621-6ee7-4a0f-afeb-19a95dd676b0;AholdDelhaize.com')
+
+.add database ['logstash-archive'] admins ('aadgroup=368aee1a-48f3-4e0f-ad90-e612ed935706;AholdDelhaize.com')

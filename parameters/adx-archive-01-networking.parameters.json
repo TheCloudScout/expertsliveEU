@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adxClusterName": {
+      "value": "adx-archive-prd-01"
+    },
+    "tier": {
+      "value": "Standard"
+    },
+    "computeType": {
+      "value": "Standard_E16ads_v5"
+    },
+    "capacity": {
+      "value": 2
+    },
+    "autoScaleEnabled": {
+      "value": false
+    },
+    "autoScaleLimit": {
+      "value": 5
+    },
+    "adxDatabaseName": {
+      "value": "logstash-archive"
+    },
+    "softDeletePeriod": {
+      "value": "P365D"
+    },
+    "hotCachePeriod": {
+      "value": "PT0S"
+    }
+  }
+}
