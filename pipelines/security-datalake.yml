@@ -12,9 +12,6 @@ pool:
 
 stages:
   - stage: MicrosoftSentinel
-    # Branch is master or environment is nonprd
-    condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
-
     displayName: 'Microsoft Sentinel'
     jobs:
       - job: azureSentinelWeUJob
