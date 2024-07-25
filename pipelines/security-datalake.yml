@@ -22,19 +22,19 @@ stages:
       - job: azureSentinelWeUJob
         displayName: 'Deploy workspace'
         steps:
-        # - task: AzureResourceManagerTemplateDeployment@3
-        #   displayName: 'Create or Update Resource Group'
-        #   inputs:
-        #     deploymentScope: 'Resource Group'
-        #     azureResourceManagerConnection: 'Visual Studio Enterprise'
-        #     subscriptionId: $(subscriptionId)
-        #     action: 'Create Or Update Resource Group'
-        #     resourceGroupName: $(resourceGroupName)
-        #     location: 'West US 3'
-        #     templateLocation: 'Linked artifact'
-        #     csmFile: 'templates/sentinelworkspace.json'
-        #     csmParametersFile: 'parameters/$(workspaceName).parameters.json'
-        #     deploymentMode: 'Incremental'
+        - task: AzureResourceManagerTemplateDeployment@3
+          displayName: 'Create or Update Resource Group'
+          inputs:
+            deploymentScope: 'Resource Group'
+            azureResourceManagerConnection: 'Visual Studio Enterprise'
+            subscriptionId: $(subscriptionId)
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: $(resourceGroupName)
+            location: 'West US 3'
+            templateLocation: 'Linked artifact'
+            csmFile: 'templates/sentinelworkspace.json'
+            csmParametersFile: 'parameters/$(workspaceName).parameters.json'
+            deploymentMode: 'Incremental'
 
         - task: AzurePowerShell@5
           displayName: 'Run table-level transformations (a.k.a. Spl1tR)'
