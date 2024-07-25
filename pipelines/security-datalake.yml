@@ -12,17 +12,23 @@ pool:
 
 stages:
   - stage: MicrosoftSentinel
-    variables:
-      - template: parameters/environment-variables-${{ parameters.env }}.yml
     # Branch is master or environment is nonprd
     condition:  or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith('${{ parameters.env }}', 'nonprd'))
 
-    displayName: 'Microsoft Sentinel "${{ parameters.env }}"'
+    displayName: 'Microsoft Sentinel'
     jobs:
       - job: azureSentinelWeUJob
-        displayName: 'Microsoft Sentinel'
+        displayName: 'Deploy workspace'
         steps:
-          # Retrieve Service Connection credentials
-          - template: templates/get-service-connection-credentials.yml
-            parameters:
-              serviceconnection_name: ${{ variables.serviceConnection }}
+        - task: AzureResourceManagerTemplateDeployment@3
+          inputs:
+            deploymentScope: 'Resource Group'
+            azureResourceManagerConnection: 'Visual Studio Enterprise'
+            subscriptionId: '412f40b6-0a47-4dcc-80a4-17fc5c679c0e'
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: 'rg-sentinel-01'
+            location: 'West US 3'
+            templateLocation: 'Linked artifact'
+            csmFile: 'templates/sentinelworkspace.json'
+            csmParametersFile: 'parameters/law-sentinel-01.parameters.json'
+            deploymentMode: 'Incremental'
