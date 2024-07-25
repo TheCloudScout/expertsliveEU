@@ -18,6 +18,7 @@ stages:
         displayName: 'Deploy workspace'
         steps:
         - task: AzureResourceManagerTemplateDeployment@3
+          displayName: 'Deploy workspace'
           inputs:
             deploymentScope: 'Resource Group'
             azureResourceManagerConnection: 'Visual Studio Enterprise'

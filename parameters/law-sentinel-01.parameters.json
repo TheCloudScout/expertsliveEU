@@ -8,12 +8,6 @@
     "retentionInDays": {
       "value": 90
     },
-    "enableBehaviorAnalyticsInsights": {
-      "value": true
-    },
-    "enableLogicAppsManagementInsights": {
-      "value": true
-    },
     "tablesArray": {
       "value": [
         {
