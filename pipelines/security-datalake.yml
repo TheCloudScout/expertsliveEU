@@ -20,7 +20,7 @@ stages:
     displayName: 'Microsoft Sentinel'
     jobs:
       - job: azureSentinelWeUJob
-        displayName: 'Deploy workspace'
+        displayName: 'Deploy Microsoft Sentinel Workspace'
         steps:
         - task: AzureResourceManagerTemplateDeployment@3
           displayName: 'Create or Update Resource Group'
