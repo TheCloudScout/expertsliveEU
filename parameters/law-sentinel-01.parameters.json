@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "logAnalyticsName": {
+      "value": "law-sentinel-01"
+    },
+    "retentionInDays": {
+      "value": 90
+    },
+    "enableBehaviorAnalyticsInsights": {
+      "value": true
+    },
+    "enableLogicAppsManagementInsights": {
+      "value": true
+    },
+    "tablesArray": {
+      "value": [
+        {
+          "tableName": "SecurityEvent",
+          "tableProperties": {
+            "plan": "Analytics",
+            "retentionInDays": 60
+          }
+        },
+        {
+          "tableName": "AADNonInteractiveUserSignInLogs",
+          "tableProperties": {
+            "plan": "Analytics",
+            "retentionInDays": 30
+          }
+        }
+      ]
+    },
+    "billingTags": {
+      "value": {
+        "Event": "Experts Live Europe",
+        "Location": "Budapest"
+      }
+    }
+  }
+}
