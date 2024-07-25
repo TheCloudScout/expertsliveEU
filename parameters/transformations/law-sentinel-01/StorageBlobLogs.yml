@@ -1,4 +1,5 @@
 tableName: StorageBlobLogs
+analyticsRetentionInDays: 60
 analyticsTransform: |
   source
   | where OperationName == 'DeleteFile' or 

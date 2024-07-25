@@ -37,7 +37,9 @@ param (
 
 )
 
-$ErrorActionPreference = "Stop" # Stop on all errors
+$ErrorActionPreference  = "Stop"
+$WarningPreference      = "SilentlyContinue"
+
 Set-StrictMode -Version Latest  # Stop on uninitialized variables
 
 Clear-Host
@@ -200,12 +202,12 @@ try {
     # Get all YAML files from the directory
     Write-Host ""
     Write-Message -icon "🔎" -message "Looking for YAML files in $($PathToYamlFiles)..."
-    $TransformationFiles = Get-ChildItem -Path "transformations/$WorkspaceName" -Filter '*.yml'
+    $TransformationFiles = Get-ChildItem -Path "$PathToYamlFiles/$WorkspaceName" -Filter '*.yml'
     if ($TransformationFiles.Count -eq 0) {
         Write-Message -icon "‼️" -message "No YAML files found in directory: $($PathToYamlFiles)" -color1 DarkRed -color2 Red
         exit
     }
-    Write-Message -type "item" -message "Found $($TransformationFiles.Count) YAML files."
+    Write-Message -type "item" -level 1 -message "Found $($TransformationFiles.Count) YAML files."
 }
 catch {
     Write-Error "Failed to get YAML files: $($_.Exception.Message)"
@@ -351,7 +353,7 @@ foreach ($File in $TransformationFiles) {
                 apiVersion = "2022-10-01"
                 properties = @{
                     plan                 = "Analytics"
-                    totalRetentionInDays = $FileContent.analyticsRetentionInDays
+                    retentionInDays = $FileContent.analyticsRetentionInDays
                 }
             }
             if ($FileContent.basicEnabled) {
@@ -396,7 +398,7 @@ if ($saveTemplate) {
     Write-Message -icon "💾" -message "Saving template to file..."
     try {
         $template | ConvertTo-Json -Depth 99 | Out-File -FilePath "Workspace-DataCollectionRule-template.json"
-        Write-Message -type "item" -message "Done!"
+        Write-Message -type "item" -level 1 -message "Done!"
     }
     catch {
         Write-Message -type "item" -message "There was an issue writing the template to disk!" -color2 Red -color3 Red
@@ -442,7 +444,7 @@ if ($deployment.properties.provisioningState -eq "Succeeded") {
     # Check if Data Collection Rule is associated with the workspace
     Write-Message -level 2 -message "Checking if Data Collection Rule is associated with the workspace..."
 
-    $workspace = Get-AzOperationalInsightsWorkspace -Name "la-logging-01" -ResourceGroupName "rg-logging-01"
+    $workspace = Get-AzOperationalInsightsWorkspace -Name $WorkspaceName -ResourceGroupName $ResourceGroupName
     If ($null -eq $workspace.DefaultDataCollectionRuleResourceId) {
         Write-Message -type "item" -level 2 -message "Setting 'DefaultDataCollectionRuleResourceId' on the workspace '$WorkspaceName'..."
         try {
