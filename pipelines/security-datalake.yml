@@ -42,7 +42,7 @@ stages:
             azureSubscription: 'Visual Studio Enterprise'
             ScriptType: 'FilePath'
             ScriptPath: 'scripts/spl1tr.ps1'
-            ScriptArguments: '-SubscriptionId $(subscriptionId) -WorkspaceName $(workspaceName) -PathToYamlFiles "$(System.DefaultWorkingDirectory)/parameters/transformations/" -ResourceGroupName $(resourceGroupName)'
+            ScriptArguments: '-SubscriptionId $(subscriptionId) -WorkspaceName $(workspaceName) -PathToYamlFiles "$(System.DefaultWorkingDirectory)/parameters/sentinelworkspace/transformations/" -ResourceGroupName $(resourceGroupName)'
             errorActionPreference: 'continue'
             azurePowerShellVersion: 'LatestVersion'
             pwsh: true
