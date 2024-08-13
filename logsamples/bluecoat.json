@@ -1,0 +1,54 @@
+[
+    {
+        "connector_host": "logstash01.domain.com",
+        "Country": "NL",
+        "host": "10.10.10.1",
+        "@timestamp": "2024-07-03T12:19:52.003187Z",
+        "@version": "1",
+        "message": "2024-07-14 02:08:18 490041 10.15.56.138 - - 192.168.1.21 192.168.1.21 Unavailable - - OBSERVED \"Technology/Internet\" -  200 TCP_TUNNELED CONNECT - tcp magicinfo.dobit.com 8443 / - - - 192.168.1.21 50092 36201 - \"unavailable\" \"unavailable\" \"unavailable\" unavailable df620c841cc57b46-0000000295e8a520-0000000066933128 - -",
+        "tags": [
+            "networking",
+            "adx"
+        ],
+        "type": "syslog"
+    },
+    {
+        "connector_host": "logstash01.domain.com",
+        "Country": "NL",
+        "host": "10.10.10.1",
+        "@timestamp": "2024-07-03T12:19:52.003187Z",
+        "@version": "1",
+        "message": "2024-07-14 02:08:18 43 10.139.159.7 - - storeofficecentral.domain.com 192.168.7.44 None - - OBSERVED \"No_Caching;No_AVScanning;Shopping\" -  200 TCP_NC_MISS POST text/xml;%20charset=utf-8 http storeofficecentral.domain.com 80 /SubmitStoreDataService.asmx - asmx - 192.168.1.21 712 776 - \"unavailable\" \"unavailable\" \"unavailable\" unavailable df620c841cc57b46-0000000295e8a526-0000000066933312 - -",
+        "tags": [
+            "networking",
+            "adx"
+        ],
+        "type": "syslog"
+    },
+    {
+        "connector_host": "logstash01.domain.com",
+        "Country": "NL",
+        "host": "10.10.10.1",
+        "@timestamp": "2024-07-03T12:19:52.003187Z",
+        "@version": "1",
+        "message": "2024-07-14 02:08:18 98 10.132.152.3 - - 192.168.1.21 192.168.1.21 Unavailable - - OBSERVED \"No_AVScanning;Technology/Internet\" -  200 TCP_TUNNELED CONNECT - tcp go.microsoft.com 443 / - - - 192.168.1.21 7016 2310 - \"unavailable\" \"unavailable\" \"unavailable\" unavailable df620c841cc57b46-0000000295e8a52c-0000000066933312 - -",
+        "tags": [
+            "networking",
+            "adx"
+        ],
+        "type": "syslog"
+    },
+    {
+        "connector_host": "logstash01.domain.com",
+        "Country": "NL",
+        "host": "10.10.10.1",
+        "@timestamp": "2024-07-03T12:19:52.003187Z",
+        "@version": "1",
+        "message": "2024-07-14 02:08:19 51 10.139.159.7 - - storeofficecentral.domain.com 192.168.7.44 None - - OBSERVED \"No_Caching;No_AVScanning;Shopping\" -  200 TCP_NC_MISS POST text/xml;%20charset=utf-8 http storeofficecentral.domain.com 80 /SubmitStoreDataService.asmx - asmx - 192.168.1.21 712 776 - \"unavailable\" \"unavailable\" \"unavailable\" unavailable df620c841cc57b46-0000000295e8a534-0000000066933313 - -",
+        "tags": [
+            "networking",
+            "adx"
+        ],
+        "type": "syslog"
+    }
+]

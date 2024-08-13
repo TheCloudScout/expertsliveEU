@@ -1,0 +1,9 @@
+tableName: StorageFileLogs
+analyticsRetentionInDays: 30
+analyticsTransform: |
+  source
+  | where OperationName == 'Flush'
+basicEnabled: true
+basicRetentionInDays: 90
+basicTransform: |
+  source

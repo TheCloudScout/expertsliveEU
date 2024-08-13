@@ -1,0 +1,15 @@
+[
+    {
+        "tags": [
+            "adx",
+            "servers",
+            "linux"
+        ],
+        "message": "<191>Oct  3 15:52:08 Message forwarded from US999999-NNM: root:         euid: 0 egid: 0 epriv: ffffffff:ffffffff name awk {len=length($1); print len;}  ",
+        "type": "syslog",
+        "host": "10.10.10.20",
+        "connector_host": "192.168.1.2",
+        "Country": "US",
+        "timestamp": "2023-10-03T13:52:08.107606Z"
+    }
+]

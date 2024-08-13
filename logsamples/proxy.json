@@ -1,0 +1,33 @@
+[
+    {
+        "message": "2024-07-14 02:08:18 43 10.139.159.7 - - storeofficecentral.domain.com 192.168.7.44 None - - OBSERVED \"No_Caching;No_AVScanning;Shopping\" -  200 TCP_NC_MISS POST text/xml;%20charset=utf-8 http storeofficecentral.domain.com 80 /SubmitStoreDataService.asmx - asmx - 192.168.1.21 712 776 - \"unavailable\" \"unavailable\" \"unavailable\" unavailable df620c841cc57b46-0000000295e8a526-0000000066933312 - -",
+        "host": {
+            "hostname": "vm-server-logstash-01",
+            "ip": "127.0.0.1"
+        },
+        "log": {
+            "syslog": {
+                "priority": 164,
+                "severity": {
+                    "code": 4,
+                    "name": "Warning"
+                },
+                "facility": {
+                    "code": 20,
+                    "name": "local4"
+                }
+            }
+        },
+        "event": {
+            "original": "<164>Aug  7 21:14:38 vm-server-logstash-01 CEF: 2024-07-14 02:08:18 43 10.139.159.7 - - storeofficecentral.domain.com 192.168.7.44 None - - OBSERVED \"No_Caching;No_AVScanning;Shopping\" -  200 TCP_NC_MISS POST text/xml;%20charset=utf-8 http storeofficecentral.domain.com 80 /SubmitStoreDataService.asmx - asmx - 192.168.1.21 712 776 - \"unavailable\" \"unavailable\" \"unavailable\" unavailable df620c841cc57b46-0000000295e8a526-0000000066933312 - -"
+        },
+        "process": {
+            "name": "CEF"
+        },
+        "service": {
+            "type": "system"
+        },
+        "ls_timestamp": "2024-08-07T21:14:38.000Z",
+        "ls_version": "1"
+    }
+]
