@@ -33,7 +33,7 @@ stages:
             location: 'West US 3'
             templateLocation: 'Linked artifact'
             csmFile: 'templates/sentinelworkspace.json'
-            csmParametersFile: 'parameters/sentinelworkspace/$(workspaceName).parameters.json'
+            csmParametersFile: 'parameters/sentinelworkspace/$(workspaceName)/$(workspaceName).parameters.json'
             deploymentMode: 'Incremental'
 
         - task: AzurePowerShell@5
