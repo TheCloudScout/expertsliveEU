@@ -202,7 +202,7 @@ try {
     # Get all YAML files from the directory
     Write-Host ""
     Write-Message -icon "🔎" -message "Looking for YAML files in $($PathToYamlFiles)..."
-    $TransformationFiles = Get-ChildItem -Path "$PathToYamlFiles/$WorkspaceName" -Filter '*.yml'
+    $TransformationFiles = Get-ChildItem -Path "$PathToYamlFiles" -Filter '*.yml'
     if ($TransformationFiles.Count -eq 0) {
         Write-Message -icon "‼️" -message "No YAML files found in directory: $($PathToYamlFiles)" -color1 DarkRed -color2 Red
         exit
