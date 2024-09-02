@@ -36,7 +36,7 @@ $adxCommands    = @()
 foreach ($sample in $sampleFiles) {
     Write-Host ""
     Write-Host "Processing sample file '$sample'..." -ForegroundColor Cyan
-    $adxTableName           = $sample.Replace('.json','').Replace('_Sample', '').Replace('Sample','') + "_CL"
+    $adxTableName           = $sample.Replace('.json','').Replace('_Sample', '').Replace('_sample', '').Replace('Sample','').Replace('sample','') + "_CL_Raw"
     $adxTableMappingName    = $adxTableName.Replace('_','').ToLower() + "_mapping"
     Write-Host ""
     Write-Host "      ADX table name          : $adxTableName" -ForegroundColor DarkGray
