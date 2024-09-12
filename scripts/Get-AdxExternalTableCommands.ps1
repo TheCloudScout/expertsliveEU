@@ -71,7 +71,7 @@ $storageContext     = New-AzStorageContext -StorageAccountName $storageAccountNa
 
 # List Containers containing Azure platform logs
 $storageContainers  = $storageContext | Get-AzStorageContainer -Prefix "insights-logs"
-Write-Host "Found $($storageContainers.Count) containers" -ForegroundColor Yellow
+Write-Host "Found $(($storageContainers | Measure-Object).Count) containers" -ForegroundColor Yellow
 
 # Loop through containers and download the latest blob
 foreach ($container in $storageContainers) {
@@ -163,4 +163,4 @@ foreach ($adxCommand in $adxCommands) {
 
 Write-Host "Cleaning up temporary files and directories" -ForegroundColor Yellow
 # Cleanup temp folders
-Remove-Item $tempFolder -Recurse -Force
+# Remove-Item $tempFolder -Recurse -Force
